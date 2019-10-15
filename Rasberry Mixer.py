@@ -43,7 +43,7 @@ def PumpenKonfiguration(PumpenNummer, PumpenListe):
 
     NeuerInhalt = str(input("Neuer Inhalt? "))
     NeueLiter = str(input("Wie viele ml? "))
-    NeueViskosität = str(input("Neue Viskosität? "))
+    NeueViskositaet = str(input("Neue Viskositaet? "))
 
     if PumpenNummer == 1:
         PumpenIndex = 0
@@ -55,7 +55,7 @@ def PumpenKonfiguration(PumpenNummer, PumpenListe):
     PumpenListe[PumpenIndex] = "Pumpe" + str(PumpenNummer)
     PumpenListe[PumpenIndex+1] = NeuerInhalt
     PumpenListe[PumpenIndex+2] = NeueLiter
-    PumpenListe[PumpenIndex+3] = NeueViskosität
+    PumpenListe[PumpenIndex+3] = NeueViskositaet
     PumpenListe[(PumpenIndex+4)] = "----------"
 
     Pumpenbelegung_Speichern(PumpenListe)
@@ -86,19 +86,19 @@ def Getraenkeliste_Speichern(GetraenkeListe):
 
         Getraenke.close()      
 #------------------------------------------------------------------
-def GetränkeListeKonfigurieren():
+def GetraenkeListeKonfigurieren():
 
     Fenster.iconify()
     GetraenkeListe_Anzeigen()
 
-    NameGetränk = str(input("Name des Getränks? "))
-    if NameGetränk != "0":
-        Getränk_Hinzufügen(NameGetränk)
+    NameGetraenk = str(input("Name des Getraenks? "))
+    if NameGetraenk != "0":
+        Getraenk_Hinzufuegen(NameGetraenk)
 
-        if NameGetränk == "0":
+        if NameGetraenk == "0":
             Frage = 0
 
-        Frage = int(input("Weiteres Getränk hinzufügen 1/0? "))       
+        Frage = int(input("Weiteres Getraenk hinzufuegen 1/0? "))       
         if Frage == 0:
             OptionTab.destroy()
             Fenster.lift()
@@ -119,9 +119,9 @@ def PumpenKonfiuration():
             BackButton()
             
 #----------------------------------------------------------------------
-def Getränk_Hinzufügen(NameGetränk):
+def Getraenk_Hinzufuegen(NameGetraenk):
 
-    if NameGetränk != "0":
+    if NameGetraenk != "0":
 
         GetraenkeListe = Getraenkeliste_2_GetraenkeListe()
 
@@ -167,14 +167,14 @@ def Getränk_Hinzufügen(NameGetränk):
                     Menge5 = "0"
 
                 else:
-                    Zutat5 =  str(input("Zutat Fünf: "))
+                    Zutat5 =  str(input("Zutat Fuenf: "))
                     if Zutat5 != "":
-                        Menge5 = str(input("Menge Fünf: "))
+                        Menge5 = str(input("Menge Fuenf: "))
                     if Zutat5 == "":
                         Zutat5 = "-"
                         Menge5 = "0"
 
-        GetraenkeListe.append(NameGetränk)
+        GetraenkeListe.append(NameGetraenk)
 
         GetraenkeListe.append(Zutat1)
         GetraenkeListe.append(Menge1)
@@ -189,7 +189,7 @@ def Getränk_Hinzufügen(NameGetränk):
 
         GetraenkeListe.append("----------")
 
-        print("Getränk hinzugefügt!")
+        print("Getraenk hinzugefuegt!")
         Getraenkeliste_Speichern(GetraenkeListe)
         return GetraenkeListe
 
@@ -208,20 +208,20 @@ def GetraenkeListe_Anzeigen():
     return(GListe)
 
 #---------------------------------------------------------------------
-def Zutaten_4_Getraenk(Getränkewunsch):
+def Zutaten_4_Getraenk(Getraenkewunsch):
 
     GetraenkeListe =  Getraenkeliste_2_GetraenkeListe()
 
-    GetränkeNummer = GetraenkeListe.index(Getränkewunsch)
+    GetraenkeNummer = GetraenkeListe.index(Getraenkewunsch)
 
-    Zutaten4Pumpen = (GetraenkeListe[(GetränkeNummer+1):(GetränkeNummer+11)])
+    Zutaten4Pumpen = (GetraenkeListe[(GetraenkeNummer+1):(GetraenkeNummer+11)])
 
     return Zutaten4Pumpen
 
 #---------------------------------------------------------------------
-def Alle_Pumpen_für_Getraenk_finden(Getränkewunsch):
+def Alle_Pumpen_fuer_Getraenk_finden(Getraenkewunsch):
 
-        Zutaten4Pumpen = Zutaten_4_Getraenk(Getränkewunsch)
+        Zutaten4Pumpen = Zutaten_4_Getraenk(Getraenkewunsch)
         PumpenListe = Pumpenbelegung_2_PumpenListe()
 
 
@@ -240,8 +240,8 @@ def Alle_Pumpen_für_Getraenk_finden(Getränkewunsch):
                 Menge = Zutaten4Pumpen[(Index4 + 1)]
                 PumpenanweisungKomplett.append(Menge)
 
-                Viskosität = PumpenListe[((PumpenListe.index(Zutat))+2)]
-                PumpenanweisungKomplett.append(Viskosität)
+                Viskositaet = PumpenListe[((PumpenListe.index(Zutat))+2)]
+                PumpenanweisungKomplett.append(Viskositaet)
 
             Index4 = Index4 +2
 
@@ -262,30 +262,30 @@ def PumpenanweisungKomplett2txt(PumpenanweisungKomplett):
     txt.close()
 
 #--------------------------------------------------------------------
-#Füllstand checken & ggf. updaten
+#Fuellstand checken & ggf. updaten
 
-def Füllstand_Aktualisieren(PumpenanweisungKomplett, PumpenListe):
+def Fuellstand_Aktualisieren(PumpenanweisungKomplett, PumpenListe):
 
-    IndexFüll1 = 0
+    IndexFuell1 = 0
     AnzahlLeer = 0
     
-    while IndexFüll1 < len(PumpenanweisungKomplett):
-        PumpeNr = PumpenanweisungKomplett[IndexFüll1]
+    while IndexFuell1 < len(PumpenanweisungKomplett):
+        PumpeNr = PumpenanweisungKomplett[IndexFuell1]
         PumpenIndex_in_PumpenListe = PumpenListe.index(PumpeNr)
 
-        Soll = float(PumpenanweisungKomplett[((IndexFüll1)+1)])
+        Soll = float(PumpenanweisungKomplett[((IndexFuell1)+1)])
         Haben = float(PumpenListe[((PumpenIndex_in_PumpenListe)+2)])
 
         if (Haben - Soll) >= 0:
-            NeuerFüllstand = Haben - Soll
-            PumpenListe[((PumpenIndex_in_PumpenListe)+2)] = NeuerFüllstand
+            NeuerFuellstand = Haben - Soll
+            PumpenListe[((PumpenIndex_in_PumpenListe)+2)] = NeuerFuellstand
 
 
         elif (Haben - Soll) < 0:
             print("Zu wenig", PumpenListe[((PumpenIndex_in_PumpenListe)+1)])
             AnzahlLeer = AnzahlLeer +1
         
-        IndexFüll1 = IndexFüll1 +3
+        IndexFuell1 = IndexFuell1 +3
     
         
     if AnzahlLeer ==0:
@@ -304,9 +304,9 @@ def AllePumpenAnsteuern():
 #------------------------------------------------------------------------
 # Pi ansteuern
 
-def Pi_Eingänge_belegen():
+def Pi_Eingaenge_belegen():
 
-    EingängeBelegt = 1
+    EingaengeBelegt = 1
     #GPIO.setmode(GPIO.BCM)
     #GPIO.setwarnings(False)
 
@@ -321,34 +321,35 @@ def Pi_Eingänge_belegen():
 
 def Pi_Ansteuern(PumpenanweisungKomplett):
 
-    Pi_Eingänge_belegen()
+    Pi_Eingaenge_belegen()
 
-    os.startfile('Pumpe1.py')
-    #os.startfile('Pumpe2.py')
-    #os.startfile('Pumpe3.py')
-    #os.startfile('Pumpe4.py')
+    os.popen('Pumpe1.py')
+    #os.popen('Pumpe2.py')
+    #os.popen('Pumpe3.py')
+    #os.popen('Pumpe4.py')
 
 
 
 #-------------------------------------------------------------------------
 # Ausschank
 
-def Ausschank(Getränkewunsch):
+def Ausschank(Getraenkewunsch):
     button.config(state = 'disabled')
-    Zutaten_4_Getraenk(Getränkewunsch)
-    Alle_Pumpen_für_Getraenk_finden(Getränkewunsch)
-    PumpenanweisungKomplett = Alle_Pumpen_für_Getraenk_finden(Getränkewunsch)
+    Zutaten_4_Getraenk(Getraenkewunsch)
+    Alle_Pumpen_fuer_Getraenk_finden(Getraenkewunsch)
+    PumpenanweisungKomplett = Alle_Pumpen_fuer_Getraenk_finden(Getraenkewunsch)
     PumpenListe = Pumpenbelegung_2_PumpenListe()
-    print(Getränkewunsch)
+    print(Getraenkewunsch)
     print(PumpenanweisungKomplett)
-    AnzahlLeer = Füllstand_Aktualisieren(PumpenanweisungKomplett, PumpenListe)
+    AnzahlLeer = Fuellstand_Aktualisieren(PumpenanweisungKomplett, PumpenListe)
     
     if AnzahlLeer == 0:
         Pi_Ansteuern(PumpenanweisungKomplett)
         Loading()
         
     elif AnzahlLeer != 0:
-         Füllstandswarnung()
+         #Fuellstandswarnung()
+        print("Fehler Füllstand")
         #os.startfile('OLI-SKRIPT.py')
 
     button.config(state = 'normal')
@@ -379,34 +380,34 @@ def FensterSet(ScreenWidth, ScreenHeight):
     Fenster.geometry("{0}x{1}+0+0".format(ScreenWidth, ScreenHeight))
 
 
-def Überschrift():
+def ueberschrift():
 
-    ÜberschriftGroese = int(round((ScreenHeight * 0.05),0))
+    ueberschriftGroese = int(round((ScreenHeight * 0.05),0))
 
     BreiteX = ScreenWidth
-    HöheY = int(round((ScreenHeight*1.1),0))
+    HoeheY = int(round((ScreenHeight*1.1),0))
 
     TopImage = Image.open("BackgroundTop.gif")
-    TopImage = TopImage.resize((BreiteX, HöheY), Image.ANTIALIAS)
+    TopImage = TopImage.resize((BreiteX, HoeheY), Image.ANTIALIAS)
     TopBild = ImageTk.PhotoImage(TopImage)
 
-    Schriftart_Größe = ("Arial", ÜberschriftGroese, "bold")     
-    Höhe = round((ScreenHeight*0.08),0)
-    Überschrift = Canvas(Fenster, width=ScreenWidth, height=Höhe, highlightthickness=0)
+    Schriftart_Groesse = ("Arial", ueberschriftGroese, "bold")     
+    Hoehe = round((ScreenHeight*0.08),0)
+    ueberschrift = Canvas(Fenster, width=ScreenWidth, height=Hoehe, highlightthickness=0)
 
-    Überschrift.create_image(0, 0, image=TopBild, anchor=NW)
-    Überschrift.image = TopBild
+    ueberschrift.create_image(0, 0, image=TopBild, anchor=NW)
+    ueberschrift.image = TopBild
 
-    Überschrift.create_text(ScreenWidth*0.5, round((ScreenHeight*0.04),0), justify=CENTER, text="CocktailMixer.py", font = Schriftart_Größe, fill="White")
+    ueberschrift.create_text(ScreenWidth*0.5, round((ScreenHeight*0.04),0), justify=CENTER, text="CocktailMixer.py", font = Schriftart_Groesse, fill="White")
 
-    Überschrift.pack()       
+    ueberschrift.pack()       
 
 
 def UnterFenster():
 
-    GetränkeAnzahl = len(GetraenkeListe_Anzeigen())
+    GetraenkeAnzahl = len(GetraenkeListe_Anzeigen())
 
-    UnterFenster = Canvas(Fenster, width= int(round((ScreenWidth * 0.9),0)), height=(GetränkeAnzahl*26), highlightthickness=0)
+    UnterFenster = Canvas(Fenster, width= int(round((ScreenWidth * 0.9),0)), height=(GetraenkeAnzahl*30), highlightthickness=0)
     UnterFenster.pack_propagate(0) 
     UnterFenster.place(relx=0.05, rely=0.1)
 
@@ -425,16 +426,32 @@ def UnterFenster():
 def Hintergrund():
 
     Breite = ScreenWidth
-    Höhe = ScreenHeight
+    Hoehe = ScreenHeight
 
     image = Image.open("Background.gif")
-    image = image.resize((Breite, Höhe), Image.ANTIALIAS)
+    image = image.resize((Breite, Hoehe), Image.ANTIALIAS)
     Bild = ImageTk.PhotoImage(image)
 
     background_image=Bild
     background_label =Label(Fenster, image=background_image)
     background_label.image = Bild
     background_label.place(relx=0, rely=0, relheight=1)
+
+def PumpenKonfiuration_OptionTabdestroy():
+    OptionTab.destroy()
+    PumpenKonfiuration()            
+
+def GetraenkeListeKonfigurieren_OptionTabdestroy():
+    OptionTab.destroy()
+    GetraenkeListeKonfigurieren()
+
+def Reinigungsprogramm():
+    OptionTab.destroy()
+    AllePumpenAnsteuern()
+
+def BackButton():
+    OptionTab.destroy()
+    Fenster.lift()
 
 def OptionTabFunction():
 
@@ -446,9 +463,9 @@ def OptionTabFunction():
         OptionTab.destroy()
         PumpenKonfiuration()            
 
-    def GetränkeListeKonfigurieren_OptionTabdestroy():
+    def GetraenkeListeKonfigurieren_OptionTabdestroy():
         OptionTab.destroy()
-        GetränkeListeKonfigurieren()
+        GetraenkeListeKonfigurieren()
 
     def Reinigungsprogramm():
         OptionTab.destroy()
@@ -463,13 +480,13 @@ def OptionTabFunction():
     Optionen_Button1 = Button(OptionTab, text = "Pumpen konfigurieren", command =   PumpenKonfiuration_OptionTabdestroy)
     Optionen_Button1.pack()
 
-    Optionen_Button2 = Button(OptionTab, text = "GetränkeListe erweitern", command = GetränkeListeKonfigurieren_OptionTabdestroy)
+    Optionen_Button2 = Button(OptionTab, text = "GetraenkeListe erweitern", command = GetraenkeListeKonfigurieren_OptionTabdestroy)
     Optionen_Button2.pack()
 
     Optionen_Button3 = Button(OptionTab, text = "Reinigungsprogramm", command = Reinigungsprogramm)
     Optionen_Button3.pack()
 
-    Optionen_Button4 = Button(OptionTab, text = "Zurück", command = BackButton)
+    Optionen_Button4 = Button(OptionTab, text = "Zurueck", command = BackButton)
     Optionen_Button4.pack()
 
 
@@ -508,10 +525,10 @@ def Loading():
     MaxDauer = MaxZeit()
     
     Br = ScreenWidth
-    Hö = ScreenHeight
+    Hoe = ScreenHeight
 
     imageP = Image.open("Processing.gif")
-    imageP = imageP.resize((Br, Hö), Image.ANTIALIAS)
+    imageP = imageP.resize((Br, Hoe), Image.ANTIALIAS)
     BildP = ImageTk.PhotoImage(imageP)
 
     background_imageP = BildP
@@ -529,27 +546,27 @@ def Loading():
         ind += 1
         if ind == 8:
             ind = 0
-        Fläche.configure(image=frame)
-        Fläche.image = frame
+        Flaeche.configure(image=frame)
+        Flaeche.image = frame
         LoadingFenster.after(150, update, ind)
 
     def Close():
         LoadingFenster.destroy()
         background_label_P.destroy()
 
-    Fläche = Label(LoadingFenster)
+    Flaeche = Label(LoadingFenster)
 
-    Fläche.pack()  
+    Flaeche.pack()  
     LoadingFenster.place(relx=0.2, rely=0.2)
     LoadingFenster.after(0, update, 0)
     LoadingFenster.after(MaxDauer, Close)
 
-def Füllstandswarnung():
+def Fuellstandswarnung():
 
     Breit = int(round((ScreenWidth*0.03),0))
     Hoch = Breit
 
-    Warnbild = Image.open("Füllstand.gif")
+    Warnbild = Image.open("Fuellstand.gif")
     Warnbild = Warnbild.resize((Breit, Hoch), Image.ANTIALIAS)
     WarnBild = ImageTk.PhotoImage(Warnbild)
     
@@ -569,7 +586,7 @@ def TK_GUI():
     SetUp()
     FensterSet(ScreenWidth, ScreenHeight) 
     Hintergrund()
-    Überschrift()       
+    ueberschrift()       
     UnterFenster()    
     OptionenButton()  
     Fenster.mainloop()

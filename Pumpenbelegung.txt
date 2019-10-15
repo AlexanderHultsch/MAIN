@@ -1,11 +1,11 @@
 Pumpe1
 CocaCola
-10
+730.0
 1
 ----------
 Pumpe2
 Oakheart
-680.0
+590.0
 1.2
 ----------
 Pumpe3
@@ -19,6 +19,14 @@ Zitronensaft
 17
 18
 19
+
+
+
+
+
+
+
+
 
 
 
